@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+    <!-- 将action托管给spring -->
+    <constant name="struts.objectFactory" value="spring"/>
+
+    <package name="default" extends="struts-default" abstract="true">
+        <interceptors>
+            <interceptor name="checkAccessToken"
+                         class="kaitou.exercise.oauth2.service.provider.interceptor.CheckAccessTokenInterceptor"/>
+        </interceptors>
+        <global-results>
+            <result name="error" type="redirect">/oauth2/failed.action</result>
+            <result name="login" type="redirect">http://localhost:9002/consumer/request1.action</result>
+        </global-results>
+    </package>
+
+    <package name="oauth2Token" namespace="/oauth2" extends="default">
+        <action name="authorization" method="authorization" class="oAuth2TokenAction">
+            <result name="success">/WEB-INF/oauth2/login.jsp?unauthorizedRequestToken=${unauthorizedRequestToken}&amp;appKey=${appKey}&amp;appSecret=${appSecret}
+            </result>
+        </action>
+        <action name="success" method="success" class="oAuth2TokenAction">
+            <result name="success">/WEB-INF/oauth2/success.jsp</result>
+        </action>
+        <action name="login" method="oauth2Login" class="oauth2LoginAction">
+            <result name="success" type="redirect">/oauth2/success.action?appKey=${loginDTO.appKey}&amp;appSecret=${loginDTO.appSecret}&amp;authorizedRequestToken=${authorizedRequestToken}
+            </result>
+        </action>
+        <action name="failed" method="accessFailed" class="oAuth2TokenAction">
+            <result name="error">/WEB-INF/oauth2/error.jsp</result>
+        </action>
+    </package>
+    <package name="provider" namespace="/" extends="default">
+        <action name="provider1" method="provider1" class="provider1">
+            <result name="success" type="velocity">/WEB-INF/vm/success.vm</result>
+            <interceptor-ref name="checkAccessToken"/>
+        </action>
+    </package>
+
+</struts>

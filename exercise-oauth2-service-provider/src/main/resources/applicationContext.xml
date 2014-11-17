@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="SpringContextUtil" class="kaitou.exercise.oauth2.common.util.SpringContextUtils" scope="singleton"/>
+
+    <bean id="oAuth2TokenDao" class="kaitou.exercise.oauth2.dao.redis.OAuth2TokenDaoImpl"/>
+
+    <bean id="oAuth2LoginService" class="kaitou.exercise.oauth2.service.provider.service.impl.OAuth2LoginServiceImpl">
+        <property name="oAuth2TokenService" ref="oAuth2TokenService"/>
+    </bean>
+
+    <bean id="oAuth2TokenService" class="kaitou.exercise.oauth2.service.provider.service.impl.OAuth2TokenServiceImpl">
+        <property name="oAuth2TokenDao" ref="oAuth2TokenDao"/>
+    </bean>
+
+    <bean id="oAuth2TokenAction" class="kaitou.exercise.oauth2.service.provider.action.OAuth2TokenAction">
+        <property name="oAuth2TokenService" ref="oAuth2TokenService"/>
+    </bean>
+
+    <bean id="oauth2LoginAction" class="kaitou.exercise.oauth2.service.provider.action.OAuth2LoginAction">
+        <property name="oAuth2LoginService" ref="oAuth2LoginService"/>
+    </bean>
+
+    <bean id="provider1" class="kaitou.exercise.oauth2.service.provider.action.MockProviderAction"/>
+
+</beans>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>exercise-oauth2</artifactId>
+        <groupId>kaitou.exercise.oauth2</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>exercise-oauth2-dao</artifactId>
+    <name>exercise OAuth2 DAO</name>
+    <description>OAuth2 数据服务层</description>
+
+    <prerequisites>
+        <maven>2.2.1</maven>
+    </prerequisites>
+
+    <build>
+        <defaultGoal>install</defaultGoal>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>kaitou.exercise.oauth2</groupId>
+            <artifactId>exercise-oauth2-common</artifactId>
+            <version>${exercise-oauth2.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.taobao.common</groupId>
+            <artifactId>tedis-common</artifactId>
+            <version>${tedis.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>hessian</groupId>
+                    <artifactId>hessian</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.taobao.common</groupId>
+            <artifactId>tedis-atomic</artifactId>
+            <version>${tedis.version}</version>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <jedis.version>2.4.2</jedis.version>
+        <tedis.version>1.1.8</tedis.version>
+    </properties>
+
+</project>

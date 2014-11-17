@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+    <!-- 将action托管给spring -->
+    <constant name="struts.objectFactory" value="spring"/>
+
+    <package name="consumer" namespace="/consumer" extends="struts-default">
+        <action name="request1" method="request1" class="requestAction">
+            <result name="success" type="redirect">http://localhost:9001/oauth2/authorization.action?appKey=${appKey}&amp;appSecret=${appSecret}</result>
+        </action>
+        <action name="request2" method="request2" class="requestAction">
+            <result name="success" type="redirect">http://localhost:9001/provider1.action?app_key=${appKey}&amp;app_secret=${appSecret}&amp;access_token=${access_token}</result>
+        </action>
+    </package>
+
+</struts>
